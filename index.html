@@ -10,106 +10,162 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
+    background: #ffffff;
+    color: #1a1a1a;
     -webkit-font-smoothing: antialiased;
   }
 
   /* ── Nav ── */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(245,245,247,.85);
+    background: rgba(255,255,255,.88);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,.07);
+    border-bottom: 1px solid rgba(255,107,53,.12);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem; height: 52px;
+    padding: 0 2rem; height: 54px;
   }
   .nav-name {
-    font-weight: 600; font-size: 0.95rem;
-    letter-spacing: -0.01em; color: #1d1d1f; text-decoration: none;
+    font-weight: 700; font-size: 1rem;
+    letter-spacing: -0.02em; color: #1a1a1a; text-decoration: none;
   }
+  .nav-name span { color: #ff6b35; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
-    font-size: 0.88rem; color: #1d1d1f;
+    font-size: 0.88rem; color: #555;
     text-decoration: none; transition: color .15s;
   }
-  .nav-links a:hover { color: #0071e3; }
+  .nav-links a:hover { color: #ff6b35; }
 
   /* ── Hero ── */
+  #hero-wrap {
+    background: linear-gradient(160deg, #fff7f4 0%, #ffffff 60%);
+    overflow: hidden; position: relative;
+  }
+  /* decorative blobs */
+  #hero-wrap::before {
+    content: "";
+    position: absolute; top: -120px; right: -100px;
+    width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #hero-wrap::after {
+    content: "";
+    position: absolute; bottom: -80px; left: -80px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,160,80,.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
   #hero {
     max-width: 980px; margin: 0 auto;
-    padding: 8rem 1.5rem 6rem;
-    text-align: center;
+    padding: 8rem 1.5rem 6.5rem;
+    text-align: center; position: relative; z-index: 1;
   }
   .hero-label {
-    font-size: 0.75rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: #0071e3; margin-bottom: 1.1rem;
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: #ff6b35; background: rgba(255,107,53,.1);
+    padding: 0.3rem 0.9rem; border-radius: 20px;
+    margin-bottom: 1.4rem;
   }
   #hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4.2rem);
-    font-weight: 700; letter-spacing: -0.04em;
-    line-height: 1.06; margin-bottom: 1.4rem; color: #1d1d1f;
+    font-size: clamp(2.8rem, 6.5vw, 4.6rem);
+    font-weight: 800; letter-spacing: -0.04em;
+    line-height: 1.04; margin-bottom: 1.4rem; color: #1a1a1a;
+    text-shadow:
+      2px 2px 0 rgba(255,107,53,.18),
+      4px 4px 0 rgba(255,107,53,.12),
+      6px 6px 0 rgba(255,107,53,.07),
+      8px 8px 0 rgba(255,107,53,.04);
   }
+  #hero h1 span { color: #ff6b35; }
   #hero p {
-    font-size: 1.12rem; color: #6e6e73;
-    max-width: 540px; margin: 0 auto 2.25rem; line-height: 1.65;
+    font-size: 1.12rem; color: #666;
+    max-width: 520px; margin: 0 auto 2.4rem; line-height: 1.68;
   }
   .btn {
-    display: inline-block; padding: 0.72rem 1.55rem;
-    background: #0071e3; color: #fff; text-decoration: none;
-    border-radius: 980px; font-size: 0.9rem; font-weight: 500;
-    transition: background .15s; white-space: nowrap;
+    display: inline-block; padding: 0.78rem 1.7rem;
+    background: #ff6b35; color: #fff; text-decoration: none;
+    border-radius: 980px; font-size: 0.9rem; font-weight: 600;
+    transition: background .15s, transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 18px rgba(255,107,53,.35);
+    white-space: nowrap;
   }
-  .btn:hover { background: #0077ed; }
+  .btn:hover {
+    background: #e85a24;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,107,53,.4);
+  }
   .btn-ghost {
-    background: transparent; color: #0071e3;
-    border: 1.5px solid #c7d7f0; margin-left: 0.75rem;
+    background: transparent; color: #ff6b35;
+    border: 1.5px solid rgba(255,107,53,.4);
+    box-shadow: none; margin-left: 0.75rem;
   }
-  .btn-ghost:hover { background: rgba(0,113,227,.06); border-color: #0071e3; }
+  .btn-ghost:hover {
+    background: rgba(255,107,53,.06);
+    border-color: #ff6b35; box-shadow: none;
+  }
 
   /* ── Section shell ── */
   .section-wrap { max-width: 980px; margin: 0 auto; padding: 5rem 1.5rem; }
   .section-label {
-    font-size: 0.72rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: #6e6e73; margin-bottom: 0.45rem;
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: #ff6b35; margin-bottom: 0.45rem;
   }
   .section-title {
-    font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 700;
-    letter-spacing: -0.025em; margin-bottom: 0.6rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800;
+    letter-spacing: -0.03em; margin-bottom: 0.6rem;
   }
-  .section-sub { font-size: 0.95rem; color: #6e6e73; margin-bottom: 3rem; }
+  .section-sub { font-size: 0.95rem; color: #888; margin-bottom: 3rem; }
 
   /* ── Projects grid ── */
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 1.25rem;
+    gap: 1.4rem;
+    perspective: 1200px;
   }
   .project-card {
-    background: #fff; border-radius: 18px;
-    box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid rgba(255,107,53,.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,.07);
     overflow: hidden; text-decoration: none; color: inherit;
-    transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
     display: flex; flex-direction: column;
+    transition: box-shadow .3s, border-color .3s;
+    transform-style: preserve-3d;
+    will-change: transform;
   }
   .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 32px rgba(0,0,0,.11);
+    box-shadow: 0 20px 48px rgba(255,107,53,.2), 0 4px 16px rgba(0,0,0,.08);
+    border-color: rgba(255,107,53,.3);
   }
   .card-banner {
-    height: 136px;
+    height: 140px;
     display: flex; align-items: center; justify-content: center;
     font-size: 3rem; user-select: none;
+    position: relative; overflow: hidden;
   }
-  .banner-blue   { background: linear-gradient(135deg,#1a6cf4,#0040aa); }
-  .banner-purple { background: linear-gradient(135deg,#7c3aed,#4c1d95); }
-  .banner-red    { background: linear-gradient(135deg,#ef4444,#991b1b); }
-  .banner-amber  { background: linear-gradient(135deg,#f59e0b,#b45309); }
-  .banner-teal   { background: linear-gradient(135deg,#14b8a6,#0f766e); }
-  .banner-navy   { background: linear-gradient(135deg,#1e40af,#0f172a); }
+  /* shimmer stripe on banners */
+  .card-banner::after {
+    content: "";
+    position: absolute; top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%);
+    transform: skewX(-15deg);
+    transition: left .6s ease;
+  }
+  .project-card:hover .card-banner::after { left: 130%; }
+
+  .banner-1 { background: linear-gradient(135deg,#ff6b35,#c0392b); }
+  .banner-2 { background: linear-gradient(135deg,#ff8c00,#e65c00); }
+  .banner-3 { background: linear-gradient(135deg,#ff4500,#8b0000); }
+  .banner-4 { background: linear-gradient(135deg,#ffb347,#e07b00); }
+  .banner-5 { background: linear-gradient(135deg,#ff7043,#bf360c); }
+  .banner-6 { background: linear-gradient(135deg,#ff5722,#1a1a1a); }
 
   .card-body {
     padding: 1.4rem 1.4rem 1.5rem;
@@ -120,46 +176,49 @@
     letter-spacing: -0.015em; margin-bottom: 0.5rem;
   }
   .card-body p {
-    font-size: 0.84rem; color: #6e6e73;
-    line-height: 1.58; flex: 1; margin-bottom: 1rem;
+    font-size: 0.84rem; color: #777;
+    line-height: 1.6; flex: 1; margin-bottom: 1rem;
   }
   .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.1rem; }
   .tag {
-    font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.6rem;
-    border-radius: 20px; background: #f5f5f7; color: #6e6e73;
-    border: 1px solid #e8e8ed;
+    font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.65rem;
+    border-radius: 20px; background: rgba(255,107,53,.08); color: #cc4a1a;
+    border: 1px solid rgba(255,107,53,.2);
   }
-  .card-link { font-size: 0.82rem; color: #0071e3; font-weight: 500; }
-  .project-card:hover .card-link { text-decoration: underline; }
+  .card-link { font-size: 0.82rem; color: #ff6b35; font-weight: 600; }
 
   /* ── About ── */
-  #about { border-top: 1px solid #e8e8ed; }
+  #about { border-top: 1px solid #f0ebe8; background: #fff9f6; }
   .about-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem;
     align-items: start;
   }
-  .about-text { font-size: 0.95rem; color: #3a3a3c; line-height: 1.75; }
-  .about-text + .about-text { margin-top: 1rem; }
+  .about-text { font-size: 0.95rem; color: #444; line-height: 1.78; }
   .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
   .skill {
-    font-size: 0.8rem; font-weight: 500; padding: 0.28rem 0.75rem;
-    border-radius: 20px; background: #fff; border: 1.5px solid #e8e8ed;
-    color: #1d1d1f; box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem;
+    border-radius: 20px; background: #fff;
+    border: 1.5px solid rgba(255,107,53,.25);
+    color: #1a1a1a;
+    box-shadow: 0 1px 4px rgba(255,107,53,.08);
+    transition: border-color .15s, background .15s;
   }
+  .skill:hover { border-color: #ff6b35; background: rgba(255,107,53,.05); }
 
   /* ── Footer ── */
   footer {
-    border-top: 1px solid #e8e8ed; background: #fff;
+    border-top: 1px solid #f0ebe8; background: #1a1a1a;
     padding: 2.5rem 1.5rem; text-align: center;
   }
   .footer-links {
     display: flex; justify-content: center; gap: 2rem; margin-bottom: 0.85rem;
   }
   .footer-links a {
-    font-size: 0.88rem; color: #0071e3; text-decoration: none;
+    font-size: 0.88rem; color: #ff6b35; text-decoration: none;
+    transition: color .15s;
   }
-  .footer-links a:hover { text-decoration: underline; }
-  footer p { font-size: 0.8rem; color: #6e6e73; }
+  .footer-links a:hover { color: #ffaa88; }
+  footer p { font-size: 0.8rem; color: #666; }
 
   /* ── Responsive ── */
   @media (max-width: 660px) {
@@ -172,7 +231,7 @@
 <body>
 
 <nav>
-  <a class="nav-name" href="#">Kartik P</a>
+  <a class="nav-name" href="#">Kartik<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#about">About</a></li>
@@ -181,15 +240,17 @@
 </nav>
 
 <!-- ── Hero ── -->
-<section id="hero">
-  <p class="hero-label">Cybersecurity Portfolio</p>
-  <h1>Building tools that<br>defend &amp; detect.</h1>
-  <p>Security-focused software engineer specialising in threat detection,
-     log analysis, vulnerability research, and security automation.</p>
-  <a href="#projects" class="btn">View Projects</a>
-  <a href="https://github.com/Kartik0219" class="btn btn-ghost"
-     target="_blank" rel="noopener">GitHub ↗</a>
-</section>
+<div id="hero-wrap">
+  <section id="hero">
+    <p class="hero-label">Cybersecurity Portfolio</p>
+    <h1>Building tools that<br><span>defend &amp; detect.</span></h1>
+    <p>Security-focused software engineer specialising in threat detection,
+       log analysis, vulnerability research, and security automation.</p>
+    <a href="#projects" class="btn">View Projects</a>
+    <a href="https://github.com/Kartik0219" class="btn btn-ghost"
+       target="_blank" rel="noopener">GitHub ↗</a>
+  </section>
+</div>
 
 <!-- ── Projects ── -->
 <div class="section-wrap" id="projects">
@@ -201,7 +262,7 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/pcap-threat-analyzer"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-blue">🔍</div>
+      <div class="card-banner banner-1">🔍</div>
       <div class="card-body">
         <h3>PCAP Threat Analyzer</h3>
         <p>Parses packet captures offline to detect port scans, DNS tunneling,
@@ -217,7 +278,7 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/soc-log-dashboard"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-purple">📊</div>
+      <div class="card-banner banner-2">📊</div>
       <div class="card-body">
         <h3>SOC Log Analysis Dashboard</h3>
         <p>Ingests Windows Security Event logs and detects brute force,
@@ -233,10 +294,10 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/vuln-scanner"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-red">🛡️</div>
+      <div class="card-banner banner-3">🛡️</div>
       <div class="card-body">
         <h3>Vulnerability Scanner</h3>
-        <p>Parses Nmap <code style="font-family:monospace;font-size:.8em;background:#f5f5f7;padding:.1em .35em;border-radius:4px">-sV</code> XML output and cross-references service
+        <p>Parses Nmap <code style="font-family:monospace;font-size:.8em;background:#fff0eb;padding:.1em .35em;border-radius:4px;color:#cc4a1a">-sV</code> XML output and cross-references service
            versions against a CVE catalog including EternalBlue, Heartbleed,
            and vsftpd backdoor. Generates remediation-focused HTML reports.</p>
         <div class="tags">
@@ -249,7 +310,7 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/phishing-sim"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-amber">🎣</div>
+      <div class="card-banner banner-4">🎣</div>
       <div class="card-body">
         <h3>Phishing Simulation Tool</h3>
         <p>Lab-only phishing simulation with per-recipient tracking links, a
@@ -265,7 +326,7 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/IntelFlow"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-teal">⚡</div>
+      <div class="card-banner banner-5">⚡</div>
       <div class="card-body">
         <h3>IntelFlow</h3>
         <p>Async Cyber Threat Intelligence &amp; SIEM enrichment engine.
@@ -281,7 +342,7 @@
 
     <a class="project-card" href="https://github.com/Kartik0219/sentinelwall"
        target="_blank" rel="noopener">
-      <div class="card-banner banner-navy">🧱</div>
+      <div class="card-banner banner-6">🧱</div>
       <div class="card-body">
         <h3>SentinelWall</h3>
         <p>Hybrid-cloud incident response and containment agent. Automates
@@ -331,7 +392,7 @@
   </div>
 </div>
 
-<!-- ── Footer / Contact ── -->
+<!-- ── Footer ── -->
 <footer id="contact">
   <div class="footer-links">
     <a href="https://github.com/Kartik0219" target="_blank" rel="noopener">GitHub</a>
@@ -339,6 +400,31 @@
   </div>
   <p>Kartik P &mdash; Cybersecurity Portfolio</p>
 </footer>
+
+<script>
+  // 3D card tilt on mouse move
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'box-shadow .3s, border-color .3s';
+    });
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const cx = r.width  / 2;
+      const cy = r.height / 2;
+      const rotX = ((y - cy) / cy) * -10;
+      const rotY = ((x - cx) / cx) *  10;
+      card.style.transition = 'box-shadow .3s, border-color .3s';
+      card.style.transform =
+        `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .55s cubic-bezier(.23,1,.32,1), box-shadow .3s, border-color .3s';
+      card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
+    });
+  });
+</script>
 
 </body>
 </html>
