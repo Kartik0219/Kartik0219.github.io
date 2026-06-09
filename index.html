@@ -289,50 +289,10 @@
 <section id="projects">
   <div class="phd sr">
     <p class="se">Work</p>
-    <h2 class="stitle">Six tools.<br>Zero compromises.</h2>
+    <h2 class="stitle">All projects.<br>Zero compromises.</h2>
   </div>
 
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/pcap-threat-analyzer" target="_blank" rel="noopener">
-    <span class="pn">01</span>
-    <div><div class="pt">PCAP Threat Analyzer</div><div class="pd">Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures</div></div>
-    <div class="pts"><span class="ptg">Python</span><span class="ptg">Scapy</span><span class="ptg">SQLite</span></div>
-    <span class="pa">↗</span>
-  </a></div>
-
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/soc-log-dashboard" target="_blank" rel="noopener" style="transition-delay:.07s">
-    <span class="pn">02</span>
-    <div><div class="pt">SOC Log Analysis Dashboard</div><div class="pd">Brute force, privilege escalation &amp; impossible travel in Windows event logs</div></div>
-    <div class="pts"><span class="ptg">Python</span><span class="ptg">SQLite</span><span class="ptg">matplotlib</span></div>
-    <span class="pa">↗</span>
-  </a></div>
-
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/vuln-scanner" target="_blank" rel="noopener" style="transition-delay:.14s">
-    <span class="pn">03</span>
-    <div><div class="pt">Vulnerability Scanner</div><div class="pd">Nmap XML parser cross-referencing EternalBlue, Heartbleed, vsftpd backdoor &amp; more</div></div>
-    <div class="pts"><span class="ptg">Python</span><span class="ptg">Nmap</span><span class="ptg">CVE</span></div>
-    <span class="pa">↗</span>
-  </a></div>
-
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/phishing-sim" target="_blank" rel="noopener" style="transition-delay:.21s">
-    <span class="pn">04</span>
-    <div><div class="pt">Phishing Simulation Tool</div><div class="pd">Per-recipient tracking, funnel analytics &amp; awareness reports — credentials never stored</div></div>
-    <div class="pts"><span class="ptg">Python</span><span class="ptg">Flask</span><span class="ptg">SQLite</span></div>
-    <span class="pa">↗</span>
-  </a></div>
-
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/IntelFlow" target="_blank" rel="noopener" style="transition-delay:.28s">
-    <span class="pn">05</span>
-    <div><div class="pt">IntelFlow</div><div class="pd">Async CTI &amp; SIEM enrichment engine — real-time IOC correlation across threat feeds</div></div>
-    <div class="pts"><span class="ptg">FastAPI</span><span class="ptg">asyncio</span><span class="ptg">Pydantic</span></div>
-    <span class="pa">↗</span>
-  </a></div>
-
-  <div class="pw"><a class="pc" href="https://github.com/Kartik0219/sentinelwall" target="_blank" rel="noopener" style="transition-delay:.35s">
-    <span class="pn">06</span>
-    <div><div class="pt">SentinelWall</div><div class="pd">Hybrid-cloud IR agent — automated firewall deployment &amp; host isolation</div></div>
-    <div class="pts"><span class="ptg">FastAPI</span><span class="ptg">Cloud SOAR</span><span class="ptg">Automation</span></div>
-    <span class="pa">↗</span>
-  </a></div>
+  <div id="proj-list"></div>
 </section>
 
 <!-- ABOUT -->
@@ -375,12 +335,35 @@
 </footer>
 
 <script>
+  // ── Curated metadata for pinned repos (shown first, in this order) ──
+  const PINNED = [
+    { slug: 'pcap-threat-analyzer', title: 'PCAP Threat Analyzer',
+      desc: 'Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures',
+      tags: ['Python', 'Scapy', 'SQLite'] },
+    { slug: 'soc-log-dashboard', title: 'SOC Log Analysis Dashboard',
+      desc: 'Brute force, privilege escalation &amp; impossible travel in Windows event logs',
+      tags: ['Python', 'SQLite', 'matplotlib'] },
+    { slug: 'vuln-scanner', title: 'Vulnerability Scanner',
+      desc: 'Nmap XML parser cross-referencing EternalBlue, Heartbleed, vsftpd backdoor &amp; more',
+      tags: ['Python', 'Nmap', 'CVE'] },
+    { slug: 'phishing-sim', title: 'Phishing Simulation Tool',
+      desc: 'Per-recipient tracking, funnel analytics &amp; awareness reports — credentials never stored',
+      tags: ['Python', 'Flask', 'SQLite'] },
+    { slug: 'IntelFlow', title: 'IntelFlow',
+      desc: 'Async CTI &amp; SIEM enrichment engine — real-time IOC correlation across threat feeds',
+      tags: ['FastAPI', 'asyncio', 'Pydantic'] },
+    { slug: 'sentinelwall', title: 'SentinelWall',
+      desc: 'Hybrid-cloud IR agent — automated firewall deployment &amp; host isolation',
+      tags: ['FastAPI', 'Cloud SOAR', 'Automation'] },
+  ];
+  // Repos to never show (portfolio site itself)
+  const SKIP = new Set(['kartik0219.github.io']);
+
+  // ── Scroll: progress + nav + parallax ──
   const bar = document.getElementById('bar');
   const nav = document.getElementById('nav');
   const o1  = document.getElementById('o1');
   const o2  = document.getElementById('o2');
-
-  // Scroll: progress bar + nav solid + parallax orbs
   window.addEventListener('scroll', () => {
     const p = scrollY / (document.body.scrollHeight - innerHeight);
     bar.style.transform = `scaleX(${p})`;
@@ -389,20 +372,20 @@
     o2.style.transform = `translateY(${scrollY * -0.14}px)`;
   }, { passive: true });
 
-  // Hero: clip-wipe + eyebrow slide on load
+  // ── Hero reveal ──
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.getElementById('h1').classList.add('go');
     document.getElementById('ey').classList.add('on');
   }));
 
-  // Scroll-reveal for .sr and .pc cards
+  // ── Generic scroll-reveal observer (for .sr elements) ──
   const io = new IntersectionObserver(e =>
     e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('on'); io.unobserve(x.target); } }),
     { threshold: 0.1 }
   );
-  document.querySelectorAll('.sr, .pc').forEach(el => io.observe(el));
+  document.querySelectorAll('.sr').forEach(el => io.observe(el));
 
-  // Count-up numbers
+  // ── Count-up ──
   const cio = new IntersectionObserver(e => {
     e.forEach(x => {
       if (!x.isIntersecting) return;
@@ -418,27 +401,106 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.c').forEach(el => cio.observe(el));
 
-  // 3D card tilt
-  // mouseenter: clear transitions so tilt tracks mouse instantly
-  // mousemove:  apply perspective rotateX/Y
-  // mouseleave: spring back with ease
-  document.querySelectorAll('.pc').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'background .25s, border-color .25s, box-shadow .25s';
+  // ── Attach reveal + 3D tilt to dynamically rendered cards ──
+  function attachCards(cards) {
+    cards.forEach(card => {
+      io.observe(card);
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'background .25s, border-color .25s, box-shadow .25s';
+      });
+      card.addEventListener('mousemove', e => {
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const x = (e.clientX - left - width  / 2) / (width  / 2);
+        const y = (e.clientY - top  - height / 2) / (height / 2);
+        card.style.transform =
+          `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 5}deg) translateZ(14px) scale(1.015)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition =
+          'transform .65s cubic-bezier(.23,1,.32,1), background .25s, border-color .25s, box-shadow .25s';
+        card.style.transform = '';
+      });
     });
-    card.addEventListener('mousemove', e => {
-      const { left, top, width, height } = card.getBoundingClientRect();
-      const x = (e.clientX - left - width  / 2) / (width  / 2);
-      const y = (e.clientY - top  - height / 2) / (height / 2);
-      card.style.transform =
-        `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 5}deg) translateZ(14px) scale(1.015)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transition =
-        'transform .65s cubic-bezier(.23,1,.32,1), background .25s, border-color .25s, box-shadow .25s';
-      card.style.transform = '';
-    });
-  });
+  }
+
+  // ── Render project list ──
+  function renderProjects(projects) {
+    const list = document.getElementById('proj-list');
+    // Update "open-source projects" stat
+    const statEl = document.querySelector('.c[data-to="6"]');
+    if (statEl) { statEl.dataset.to = projects.length; statEl.textContent = projects.length; }
+
+    list.innerHTML = projects.map((p, i) => `
+      <div class="pw">
+        <a class="pc" href="${p.url}" target="_blank" rel="noopener"
+           style="transition-delay:${(i % 6) * 0.07}s">
+          <span class="pn">${String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <div class="pt">${p.title}</div>
+            <div class="pd">${p.desc}</div>
+          </div>
+          <div class="pts">${p.tags.map(t => `<span class="ptg">${t}</span>`).join('')}</div>
+          <span class="pa">↗</span>
+        </a>
+      </div>`).join('');
+
+    attachCards([...list.querySelectorAll('.pc')]);
+  }
+
+  // ── Fetch from GitHub API, fall back to static PINNED data ──
+  async function loadProjects() {
+    const pinnedSlugs = new Set(PINNED.map(p => p.slug.toLowerCase()));
+    let projects = [];
+
+    try {
+      const res = await fetch(
+        'https://api.github.com/users/Kartik0219/repos?sort=pushed&per_page=50',
+        { headers: { Accept: 'application/vnd.github+json' } }
+      );
+      if (!res.ok) throw new Error('API failed');
+      const repos = await res.json();
+
+      // Map own, non-fork repos by lowercase name
+      const bySlug = {};
+      repos.filter(r => !r.fork && !SKIP.has(r.name.toLowerCase()))
+           .forEach(r => { bySlug[r.name.toLowerCase()] = r; });
+
+      // Pinned first (curated metadata + API url)
+      PINNED.forEach(pin => {
+        const api = bySlug[pin.slug.toLowerCase()];
+        projects.push({
+          title: pin.title, desc: pin.desc, tags: pin.tags,
+          url: api ? api.html_url : `https://github.com/Kartik0219/${pin.slug}`,
+        });
+      });
+
+      // Extra repos not in pinned list
+      Object.values(bySlug)
+        .filter(r => !pinnedSlugs.has(r.name.toLowerCase()))
+        .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+        .forEach(r => {
+          const tags = (r.topics && r.topics.length)
+            ? r.topics.slice(0, 3).map(t => t.replace(/-/g, ' '))
+            : (r.language ? [r.language] : []);
+          projects.push({
+            title: r.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+            desc: r.description || r.name,
+            tags,
+            url: r.html_url,
+          });
+        });
+    } catch {
+      // Static fallback
+      projects = PINNED.map(p => ({
+        title: p.title, desc: p.desc, tags: p.tags,
+        url: `https://github.com/Kartik0219/${p.slug}`,
+      }));
+    }
+
+    renderProjects(projects);
+  }
+
+  loadProjects();
 </script>
 
 </body>
