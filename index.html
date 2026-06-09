@@ -150,6 +150,15 @@
   .se::before { content:""; width:24px; height:1px; background:var(--orange); flex-shrink:0; }
   .stitle { font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; letter-spacing:-.04em; line-height:1.1; }
 
+  /* ── Live badge ── */
+  .live-pill {
+    font-size:.58rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em;
+    padding:.18rem .55rem; border-radius:20px;
+    background:rgba(52,199,89,.14); color:#34c759;
+    border:1px solid rgba(52,199,89,.28);
+    white-space:nowrap; vertical-align:middle; margin-left:.5rem;
+  }
+
   /* ── 3D card wrapper ── */
   .pw { perspective: 900px; margin-bottom: 8px; }
   .pc {
@@ -271,7 +280,7 @@
 <div id="stats">
   <div class="sg">
     <div class="st sr">
-      <div class="sn"><span class="c" data-to="6">0</span></div>
+      <div class="sn"><span class="c" data-to="7">0</span></div>
       <div class="sl">Open-source projects</div>
     </div>
     <div class="st sr" style="transition-delay:.12s">
@@ -355,6 +364,10 @@
     { slug: 'sentinelwall', title: 'SentinelWall',
       desc: 'Hybrid-cloud IR agent — automated firewall deployment &amp; host isolation',
       tags: ['FastAPI', 'Cloud SOAR', 'Automation'] },
+    { slug: 'secrets-scanner', title: 'Secrets Scanner',
+      desc: 'Detect hardcoded API keys, tokens &amp; high-entropy strings — paste code or upload a file',
+      tags: ['Python', 'Flask', 'Entropy'],
+      live: 'https://secrets-scanner.onrender.com' },
   ];
   // Repos to never show (portfolio site itself)
   const SKIP = new Set(['kartik0219.github.io']);
@@ -432,11 +445,11 @@
 
     list.innerHTML = projects.map((p, i) => `
       <div class="pw">
-        <a class="pc" href="${p.url}" target="_blank" rel="noopener"
+        <a class="pc" href="${p.live || p.url}" target="_blank" rel="noopener"
            style="transition-delay:${(i % 6) * 0.07}s">
           <span class="pn">${String(i + 1).padStart(2, '0')}</span>
           <div>
-            <div class="pt">${p.title}</div>
+            <div class="pt">${p.title}${p.live ? '<span class="live-pill">Live</span>' : ''}</div>
             <div class="pd">${p.desc}</div>
           </div>
           <div class="pts">${p.tags.map(t => `<span class="ptg">${t}</span>`).join('')}</div>
