@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kartik P — Cybersecurity Portfolio</title>
+<meta name="description" content="Security-focused software engineer building threat detection, log analysis, vulnerability research, and security automation tools.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,245,247,.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,.07);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 52px;
+  }
+  .nav-name {
+    font-weight: 600; font-size: 0.95rem;
+    letter-spacing: -0.01em; color: #1d1d1f; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.88rem; color: #1d1d1f;
+    text-decoration: none; transition: color .15s;
+  }
+  .nav-links a:hover { color: #0071e3; }
+
+  /* ── Hero ── */
+  #hero {
+    max-width: 980px; margin: 0 auto;
+    padding: 8rem 1.5rem 6rem;
+    text-align: center;
+  }
+  .hero-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: #0071e3; margin-bottom: 1.1rem;
+  }
+  #hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 700; letter-spacing: -0.04em;
+    line-height: 1.06; margin-bottom: 1.4rem; color: #1d1d1f;
+  }
+  #hero p {
+    font-size: 1.12rem; color: #6e6e73;
+    max-width: 540px; margin: 0 auto 2.25rem; line-height: 1.65;
+  }
+  .btn {
+    display: inline-block; padding: 0.72rem 1.55rem;
+    background: #0071e3; color: #fff; text-decoration: none;
+    border-radius: 980px; font-size: 0.9rem; font-weight: 500;
+    transition: background .15s; white-space: nowrap;
+  }
+  .btn:hover { background: #0077ed; }
+  .btn-ghost {
+    background: transparent; color: #0071e3;
+    border: 1.5px solid #c7d7f0; margin-left: 0.75rem;
+  }
+  .btn-ghost:hover { background: rgba(0,113,227,.06); border-color: #0071e3; }
+
+  /* ── Section shell ── */
+  .section-wrap { max-width: 980px; margin: 0 auto; padding: 5rem 1.5rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: #6e6e73; margin-bottom: 0.45rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 700;
+    letter-spacing: -0.025em; margin-bottom: 0.6rem;
+  }
+  .section-sub { font-size: 0.95rem; color: #6e6e73; margin-bottom: 3rem; }
+
+  /* ── Projects grid ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.25rem;
+  }
+  .project-card {
+    background: #fff; border-radius: 18px;
+    box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    overflow: hidden; text-decoration: none; color: inherit;
+    transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 32px rgba(0,0,0,.11);
+  }
+  .card-banner {
+    height: 136px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; user-select: none;
+  }
+  .banner-blue   { background: linear-gradient(135deg,#1a6cf4,#0040aa); }
+  .banner-purple { background: linear-gradient(135deg,#7c3aed,#4c1d95); }
+  .banner-red    { background: linear-gradient(135deg,#ef4444,#991b1b); }
+  .banner-amber  { background: linear-gradient(135deg,#f59e0b,#b45309); }
+  .banner-teal   { background: linear-gradient(135deg,#14b8a6,#0f766e); }
+  .banner-navy   { background: linear-gradient(135deg,#1e40af,#0f172a); }
+
+  .card-body {
+    padding: 1.4rem 1.4rem 1.5rem;
+    flex: 1; display: flex; flex-direction: column;
+  }
+  .card-body h3 {
+    font-size: 1.02rem; font-weight: 700;
+    letter-spacing: -0.015em; margin-bottom: 0.5rem;
+  }
+  .card-body p {
+    font-size: 0.84rem; color: #6e6e73;
+    line-height: 1.58; flex: 1; margin-bottom: 1rem;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.1rem; }
+  .tag {
+    font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.6rem;
+    border-radius: 20px; background: #f5f5f7; color: #6e6e73;
+    border: 1px solid #e8e8ed;
+  }
+  .card-link { font-size: 0.82rem; color: #0071e3; font-weight: 500; }
+  .project-card:hover .card-link { text-decoration: underline; }
+
+  /* ── About ── */
+  #about { border-top: 1px solid #e8e8ed; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem;
+    align-items: start;
+  }
+  .about-text { font-size: 0.95rem; color: #3a3a3c; line-height: 1.75; }
+  .about-text + .about-text { margin-top: 1rem; }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
+  .skill {
+    font-size: 0.8rem; font-weight: 500; padding: 0.28rem 0.75rem;
+    border-radius: 20px; background: #fff; border: 1.5px solid #e8e8ed;
+    color: #1d1d1f; box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid #e8e8ed; background: #fff;
+    padding: 2.5rem 1.5rem; text-align: center;
+  }
+  .footer-links {
+    display: flex; justify-content: center; gap: 2rem; margin-bottom: 0.85rem;
+  }
+  .footer-links a {
+    font-size: 0.88rem; color: #0071e3; text-decoration: none;
+  }
+  .footer-links a:hover { text-decoration: underline; }
+  footer p { font-size: 0.8rem; color: #6e6e73; }
+
+  /* ── Responsive ── */
+  @media (max-width: 660px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { gap: 1.25rem; }
+    #hero { padding: 5rem 1.25rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="#">Kartik P</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <p class="hero-label">Cybersecurity Portfolio</p>
+  <h1>Building tools that<br>defend &amp; detect.</h1>
+  <p>Security-focused software engineer specialising in threat detection,
+     log analysis, vulnerability research, and security automation.</p>
+  <a href="#projects" class="btn">View Projects</a>
+  <a href="https://github.com/Kartik0219" class="btn btn-ghost"
+     target="_blank" rel="noopener">GitHub ↗</a>
+</section>
+
+<!-- ── Projects ── -->
+<div class="section-wrap" id="projects">
+  <p class="section-label">Work</p>
+  <h2 class="section-title">Projects</h2>
+  <p class="section-sub">Six open-source security tools built from scratch.</p>
+
+  <div class="projects-grid">
+
+    <a class="project-card" href="https://github.com/Kartik0219/pcap-threat-analyzer"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-blue">🔍</div>
+      <div class="card-body">
+        <h3>PCAP Threat Analyzer</h3>
+        <p>Parses packet captures offline to detect port scans, DNS tunneling,
+           cleartext credential leaks, and C2 beaconing patterns. Produces
+           console, CSV, and self-contained HTML reports with embedded charts.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Scapy</span>
+          <span class="tag">SQLite</span><span class="tag">matplotlib</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Kartik0219/soc-log-dashboard"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-purple">📊</div>
+      <div class="card-body">
+        <h3>SOC Log Analysis Dashboard</h3>
+        <p>Ingests Windows Security Event logs and detects brute force,
+           password spray, impossible travel, and privilege-escalation chains.
+           Outputs timeline charts and severity-ranked alert tables.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">SQLite</span>
+          <span class="tag">Windows Events</span><span class="tag">matplotlib</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Kartik0219/vuln-scanner"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-red">🛡️</div>
+      <div class="card-body">
+        <h3>Vulnerability Scanner</h3>
+        <p>Parses Nmap <code style="font-family:monospace;font-size:.8em;background:#f5f5f7;padding:.1em .35em;border-radius:4px">-sV</code> XML output and cross-references service
+           versions against a CVE catalog including EternalBlue, Heartbleed,
+           and vsftpd backdoor. Generates remediation-focused HTML reports.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Nmap</span>
+          <span class="tag">CVE Research</span><span class="tag">SQLite</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Kartik0219/phishing-sim"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-amber">🎣</div>
+      <div class="card-body">
+        <h3>Phishing Simulation Tool</h3>
+        <p>Lab-only phishing simulation with per-recipient tracking links, a
+           Flask tracking server, click &amp; submit funnel analytics, and an
+           awareness training report. Credentials are never stored.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Flask</span>
+          <span class="tag">SQLite</span><span class="tag">Security Awareness</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Kartik0219/IntelFlow"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-teal">⚡</div>
+      <div class="card-body">
+        <h3>IntelFlow</h3>
+        <p>Async Cyber Threat Intelligence &amp; SIEM enrichment engine.
+           Correlates IOCs from multiple threat feeds, enriches SIEM alerts
+           in real time, and exposes a FastAPI REST interface.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">FastAPI</span>
+          <span class="tag">asyncio</span><span class="tag">Pydantic v2</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Kartik0219/sentinelwall"
+       target="_blank" rel="noopener">
+      <div class="card-banner banner-navy">🧱</div>
+      <div class="card-body">
+        <h3>SentinelWall</h3>
+        <p>Hybrid-cloud incident response and containment agent. Automates
+           firewall rule deployment, host isolation, and evidence collection
+           across cloud providers via async FastAPI workflows.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">FastAPI</span>
+          <span class="tag">Cloud SOAR</span><span class="tag">Automation</span>
+        </div>
+        <span class="card-link">View on GitHub →</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ── About ── -->
+<div class="section-wrap" id="about">
+  <p class="section-label">Background</p>
+  <h2 class="section-title">About</h2>
+  <div class="about-grid">
+    <div>
+      <p class="about-text">I build security tools that make threat detection,
+        incident response, and security awareness more accessible. My focus is
+        on writing clean, well-tested Python tooling across the full detection
+        engineering stack — from raw packet analysis to cloud-native automation.</p>
+      <p class="about-text" style="margin-top:1rem;">All projects are open-source,
+        fully tested, and built with real-world deployability in mind.</p>
+    </div>
+    <div>
+      <p class="section-label" style="margin-bottom:.75rem;">Skills</p>
+      <div class="skills-grid">
+        <span class="skill">Python</span>
+        <span class="skill">Threat Detection</span>
+        <span class="skill">PCAP Analysis</span>
+        <span class="skill">SIEM / Log Analysis</span>
+        <span class="skill">Vulnerability Research</span>
+        <span class="skill">Flask</span>
+        <span class="skill">FastAPI</span>
+        <span class="skill">SQLite</span>
+        <span class="skill">Nmap / Scapy</span>
+        <span class="skill">CVE Research</span>
+        <span class="skill">Security Automation</span>
+        <span class="skill">asyncio</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer / Contact ── -->
+<footer id="contact">
+  <div class="footer-links">
+    <a href="https://github.com/Kartik0219" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:kartikp200219@gmail.com">kartikp200219@gmail.com</a>
+  </div>
+  <p>Kartik P &mdash; Cybersecurity Portfolio</p>
+</footer>
+
+</body>
+</html>
