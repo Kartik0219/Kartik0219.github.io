@@ -20,6 +20,27 @@
 <meta name="twitter:description" content="Security-focused software engineer. 7 open-source projects.">
 <meta name="twitter:image"      content="https://avatars.githubusercontent.com/Kartik0219?s=400">
 
+<!-- Structured data for AI / search discoverability -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kartik P",
+  "url": "https://kartik0219.github.io",
+  "sameAs": [
+    "https://github.com/Kartik0219",
+    "https://www.linkedin.com/in/kartikp19"
+  ],
+  "jobTitle": "Cybersecurity Software Engineer",
+  "description": "Security-focused software engineer building threat detection, log analysis, vulnerability research, and security automation tools.",
+  "knowsAbout": [
+    "Threat Detection", "PCAP Analysis", "SIEM / Log Analysis",
+    "Vulnerability Research", "CVE Research", "Security Automation",
+    "Python", "Flask", "FastAPI"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -196,6 +217,13 @@
   .fl a:hover { color:var(--orange); }
   footer p { font-size:.74rem; color:#777; }
 
+  /* ── Ask AI about me ── */
+  .ai-block { max-width:1200px; margin:0 auto 2rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+  .ai-label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:.75rem; }
+  .ai-links { display:flex; gap:.6rem; flex-wrap:wrap; }
+  .ai-link { font-size:.78rem; font-weight:600; padding:.5rem 1.1rem; border-radius:999px; border:1px solid var(--border); color:var(--text); text-decoration:none; background:var(--card); transition:border-color .2s,color .2s; }
+  .ai-link:hover { border-color:var(--orange); color:var(--orange-lt); }
+
   /* Generic scroll-reveal */
   .sr { opacity:0; transform:translateY(44px); transition:opacity .9s var(--ease-out),transform .9s var(--ease-out); }
   .sr.on { opacity:1; transform:translateY(0); }
@@ -350,6 +378,10 @@
 
 <!-- FOOTER -->
 <footer id="contact">
+  <div class="ai-block">
+    <p class="ai-label">Ask AI about me</p>
+    <div class="ai-links" id="ai-links"></div>
+  </div>
   <div class="ft">
     <div class="fl">
       <a href="https://github.com/Kartik0219" target="_blank" rel="noopener">GitHub</a>
@@ -360,6 +392,29 @@
 </footer>
 
 <script>
+  // Ask AI about me — prefilled-prompt links to AI providers
+  (function () {
+    const prompt = "Tell me about Kartik P, a cybersecurity-focused software engineer. " +
+      "Based on his portfolio at https://kartik0219.github.io and GitHub github.com/Kartik0219, " +
+      "summarise his open-source security projects, technical skills, and background.";
+    const q = encodeURIComponent(prompt);
+    const providers = [
+      { name: "ChatGPT", url: "https://chatgpt.com/?q=" + q },
+      { name: "Claude", url: "https://claude.ai/new?q=" + q },
+      { name: "Perplexity", url: "https://www.perplexity.ai/search?q=" + q },
+    ];
+    const container = document.getElementById("ai-links");
+    providers.forEach((p) => {
+      const a = document.createElement("a");
+      a.href = p.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "ai-link";
+      a.textContent = "Ask " + p.name;
+      container.appendChild(a);
+    });
+  })();
+
   const PINNED = [
     { slug:'pcap-threat-analyzer', title:'PCAP Threat Analyzer',
       desc:'Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures',
