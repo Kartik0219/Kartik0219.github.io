@@ -147,12 +147,6 @@
 
   /* ── Skeleton loader ── */
   @keyframes shimmer { 0%{background-position:-600px 0} 100%{background-position:600px 0} }
-  .sk-card {
-    height:82px; border-radius:var(--radius); margin-bottom:8px;
-    background:linear-gradient(90deg,var(--card) 25%,var(--card-h) 50%,var(--card) 75%);
-    background-size:600px 100%;
-    animation:shimmer 1.4s ease infinite;
-  }
 
   /* ── Live badge ── */
   .live-pill { font-size:.58rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:.18rem .55rem; border-radius:20px; background:rgba(52,199,89,.14); color:#34c759; border:1px solid rgba(52,199,89,.28); white-space:nowrap; vertical-align:middle; margin-left:.5rem; }
@@ -160,47 +154,69 @@
   /* ── Star badge ── */
   .star-badge { font-size:.65rem; font-weight:600; color:var(--muted); margin-left:.4rem; vertical-align:middle; white-space:nowrap; }
 
-  /* ── 3D card ── */
-  .pw { perspective:900px; margin-bottom:8px; }
-  .pc {
-    --pc-indent:calc(62px + 2rem);
-    padding:1.6rem 1.5rem; border-radius:var(--radius);
-    color:inherit;
-    background:var(--card); border:1px solid var(--border);
-    position:relative; overflow:hidden; transform-style:preserve-3d;
-    box-shadow:var(--shadow-card);
-    opacity:0; translate:0 36px;
-    transition:opacity .75s var(--ease-out),translate .75s var(--ease-out),background var(--dur-mid),border-color var(--dur-mid),box-shadow var(--dur-mid);
+  /* ── Bento grid ── */
+  .bento-grid {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:minmax(190px,auto); gap:12px; grid-auto-flow:dense;
   }
-  .pc-row { display:grid; grid-template-columns:62px 1fr auto 30px; align-items:center; gap:2rem; }
-  .pc.on { opacity:1; translate:0 0; }
-  .pc::before { content:""; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,.09),transparent); }
-  .pc::after { content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; background:linear-gradient(110deg,transparent 30%,rgba(255,107,53,.06) 50%,transparent 70%); opacity:0; transition:opacity .3s; }
-  .pc:hover { background:var(--card-h); border-color:var(--border-h); box-shadow:var(--shadow-card-h); }
-  .pc:hover::after { opacity:1; }
-  .pc:hover .pn { color:var(--orange); }
-  .pc:hover .pa { transform:translate(3px,-3px); color:var(--orange); }
-  .pn { font-size:.71rem; font-weight:700; letter-spacing:.05em; color:var(--muted); transition:color .25s; }
-  .pt { font-size:1.07rem; font-weight:700; letter-spacing:-.02em; margin-bottom:.28rem; }
-  .pd { font-size:.83rem; color:var(--muted); line-height:1.5; }
-  .pts { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:flex-end; }
-  .ptg { font-size:.61rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:.18rem .55rem; border-radius:3px; background:rgba(255,107,53,.1); color:var(--orange); border:1px solid rgba(255,107,53,.18); cursor:pointer; transition:background var(--dur-fast),color var(--dur-fast); }
-  .ptg:hover { background:rgba(255,107,53,.2); }
-  .pa { font-size:1.1rem; color:var(--muted); text-decoration:none; transition:transform .25s,color .25s; }
-  .pa:hover { color:var(--orange); transform:translate(3px,-3px); }
+  .bento-card {
+    position:relative; overflow:hidden; border-radius:var(--radius);
+    background:var(--card); border:1px solid var(--border); box-shadow:var(--shadow-card);
+    padding:1.5rem; display:flex; flex-direction:column;
+    color:inherit; text-decoration:none; transform-style:preserve-3d;
+    opacity:0; translate:0 36px;
+    transition:opacity .7s var(--ease-out),translate .7s var(--ease-out),background var(--dur-mid),border-color var(--dur-mid),box-shadow var(--dur-mid);
+  }
+  .bento-card.on { opacity:1; translate:0 0; }
+  .bento-card.featured { grid-column:span 2; grid-row:span 2; }
+  .bento-card.wide { grid-column:span 2; }
+  .bento-card > * { position:relative; z-index:2; }
+  .bento-card::after { content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; z-index:3;
+    background:linear-gradient(110deg,transparent 30%,rgba(255,107,53,.06) 50%,transparent 70%); opacity:0; transition:opacity .3s; }
+  .bento-card:hover { background:var(--card-h); border-color:var(--border-h); box-shadow:var(--shadow-card-h); }
+  .bento-card:hover::after { opacity:1; }
+  .bento-card:hover .bc-title { color:var(--orange); }
+  .bento-card:hover .bc-arrow { transform:translate(3px,-3px); color:var(--orange); }
 
-  /* ── Project details (expand-on-click) ── */
-  .pdt-btn { margin-top:1rem; margin-left:var(--pc-indent); background:none; border:none; color:var(--muted);
-    font:inherit; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em;
-    cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; padding:0; transition:color var(--dur-fast); }
-  .pdt-btn:hover { color:var(--orange); }
-  .pdt-btn .chev { font-size:.8rem; transition:transform var(--dur-fast); }
-  .pdt-btn[aria-expanded="true"] .chev { transform:rotate(180deg); }
-  .pdt { max-height:0; overflow:hidden; transition:max-height .42s var(--ease-out); }
-  .pdt.open { max-height:360px; }
-  .pdt-inner { margin:.7rem 0 .1rem; margin-left:var(--pc-indent); max-width:64ch;
-    padding-top:.9rem; border-top:1px solid var(--border);
-    font-size:.86rem; line-height:1.65; color:var(--muted); }
+  .bc-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .bc-num { font-size:.66rem; font-weight:700; letter-spacing:.08em; color:var(--dim); font-variant-numeric:tabular-nums; }
+  .bc-arrow { font-size:1.1rem; color:var(--muted); line-height:1; transition:transform .25s,color .25s; }
+  .bc-title { font-size:1.05rem; font-weight:700; letter-spacing:-.02em; margin:.85rem 0 .3rem; transition:color .25s; display:flex; align-items:center; flex-wrap:wrap; gap:.15rem; }
+  .bento-card.featured .bc-title { font-size:1.5rem; }
+  .bc-desc { font-size:.84rem; color:var(--muted); line-height:1.55; }
+  .bento-card.featured .bc-desc { font-size:.95rem; line-height:1.7; }
+  .bc-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:auto; padding-top:1.1rem; }
+  .btag { font-size:.61rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:.2rem .55rem; border-radius:3px; background:rgba(255,107,53,.1); color:var(--orange); border:1px solid rgba(255,107,53,.18); }
+
+  /* animated gradient border — live demo tiles only */
+  @property --bento-angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+  .bento-card.live { border-color:rgba(255,107,53,.22); }
+  .bento-card.live::before {
+    content:""; position:absolute; inset:0; border-radius:var(--radius); padding:1px; pointer-events:none; z-index:1;
+    background:conic-gradient(from var(--bento-angle),transparent 50%,var(--orange) 72%,var(--orange-lt) 84%,transparent 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    animation:bento-spin 5s linear infinite;
+  }
+  @keyframes bento-spin { to { --bento-angle:360deg; } }
+
+  /* skeleton placeholders */
+  .bento-card.skeleton { opacity:1; translate:0 0;
+    background:linear-gradient(90deg,var(--card) 25%,var(--card-h) 50%,var(--card) 75%); background-size:600px 100%;
+    animation:shimmer 1.4s ease infinite; }
+  .bento-card.skeleton::after, .bento-card.skeleton::before { display:none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card.live::before { animation:none; background:linear-gradient(120deg,var(--orange),transparent 55%); }
+  }
+  @media (max-width:900px) {
+    .bento-grid { grid-template-columns:repeat(2,1fr); }
+    .bento-card.featured, .bento-card.wide { grid-column:span 2; grid-row:auto; }
+  }
+  @media (max-width:560px) {
+    .bento-grid { grid-template-columns:1fr; }
+    .bento-card.featured, .bento-card.wide { grid-column:span 1; }
+  }
 
   /* ── About ── */
   #about { border-top:1px solid var(--border); background:var(--surface); padding:7rem 2.5rem; }
@@ -224,7 +240,7 @@
   .sk:hover { border-color:var(--orange); color:var(--orange); transform:translateZ(12px) scale(1.1); box-shadow:0 4px 18px rgba(255,107,53,.22); }
 
   /* ── Footer ── */
-  footer { border-top:1px solid var(--border); background:var(--bg); padding:3rem 2.5rem; }
+  footer { border-top:1px solid var(--border); background:var(--bg); padding:3rem 2.5rem; content-visibility:auto; contain-intrinsic-size:0 360px; }
   .ft { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
   .fl { display:flex; gap:2rem; }
   .fl a { font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); text-decoration:none; transition:color .2s; }
@@ -244,10 +260,6 @@
 
   @media(max-width:768px) {
     .ag,.sg { grid-template-columns:1fr; }
-    .pc { padding:1.2rem 1rem; --pc-indent:0; }
-    .pc-row { grid-template-columns:1fr 24px; gap:1rem; }
-    .pts { display:none; }
-    .pn { display:none; }
     h1 { font-size:clamp(2.5rem,10vw,3.5rem); }
     nav,#hero,#projects,#about,footer { padding-left:1.25rem; padding-right:1.25rem; }
     .btns { gap:.5rem; }
@@ -315,15 +327,14 @@
     <h2 class="stitle">All projects.<br>Zero compromises.</h2>
   </div>
   <div class="filter-bar" id="filter-bar"></div>
-  <div id="proj-list">
-    <!-- skeletons shown while API loads -->
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
-    <div class="sk-card"></div>
+  <div id="proj-list" class="bento-grid">
+    <!-- skeleton tiles shown while the GitHub API loads -->
+    <div class="bento-card skeleton featured"></div>
+    <div class="bento-card skeleton wide"></div>
+    <div class="bento-card skeleton"></div>
+    <div class="bento-card skeleton"></div>
+    <div class="bento-card skeleton"></div>
+    <div class="bento-card skeleton"></div>
   </div>
 </section>
 
@@ -445,28 +456,12 @@
   })();
 
   const PINNED = [
-    { slug:'pcap-threat-analyzer', title:'PCAP Threat Analyzer',
-      desc:'Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures',
-      tags:['Python','Scapy','SQLite'],
-      detail:'Parses raw .pcap captures to surface port scans, DNS tunneling, and command-and-control beaconing. Built on Scapy, with detections persisted to SQLite and a severity-ranked report. This was my first end-to-end detection-engineering project — going from packets on the wire to actionable findings.' },
-    { slug:'soc-log-dashboard', title:'SOC Log Analysis Dashboard',
-      desc:'Brute force, privilege escalation &amp; impossible travel in Windows event logs',
-      tags:['Python','SQLite','matplotlib'],
-      detail:'Correlates Windows event logs to detect brute-force attempts, privilege escalation, and impossible-travel logins. Aggregates the signals into a matplotlib dashboard so an analyst can triage at a glance instead of grepping raw logs.' },
-    { slug:'vuln-scanner', title:'Vulnerability Scanner',
-      desc:'Nmap XML parser cross-referencing EternalBlue, Heartbleed, vsftpd backdoor &amp; more',
-      tags:['Python','Nmap','CVE'],
-      detail:'Parses Nmap XML output and cross-references discovered services against known CVEs — EternalBlue, Heartbleed, the vsftpd backdoor, and others. Turns a raw network scan into a prioritized, human-readable list of likely exposures.' },
-    { slug:'phishing-sim', title:'Phishing Simulation Tool',
-      desc:'Per-recipient tracking, funnel analytics &amp; awareness reports — credentials never stored',
-      tags:['Python','Flask','SQLite'],
-      live: 'https://web-production-20af0.up.railway.app/',
-      detail:'An authorized phishing-simulation platform with per-recipient tracking, click-and-submit funnel analytics, and security-awareness reporting. Credentials are never stored — submitted form data is discarded immediately and only the event is recorded. Runs as a live demo on Railway.' },
-    { slug:'IntelFlow', title:'IntelFlow',
-      desc:'Async CTI &amp; SIEM enrichment engine — real-time IOC correlation across threat feeds',
-      tags:['FastAPI','asyncio','Pydantic'],
-      detail:'An asynchronous cyber-threat-intelligence enrichment engine that correlates indicators of compromise across multiple threat feeds in real time. Built on FastAPI and asyncio for high-throughput IOC lookups feeding into a SIEM.' },
-    { slug:'sentinelwall', title:'SentinelWall',
+    { slug:'malscan', title:'malscan', size:'featured',
+      desc:'On-demand malware scanner — hash, entropy, PE &amp; YARA detection with a quarantine vault',
+      tags:['Python','YARA','Flask'],
+      live: 'https://malscan-production.up.railway.app/',
+      detail:'An on-demand malware scanner that combines a hash blocklist, Shannon-entropy and PE-import heuristics, and YARA rules into a single verdict per file. Adds a reversible quarantine vault, in-memory archive scanning (zip/tar/gzip, with zip-bomb defenses), optional VirusTotal hash lookups, and AI-powered triage that explains findings in plain English. 58 automated tests; live demo on Railway.' },
+    { slug:'sentinelwall', title:'SentinelWall', size:'wide',
       desc:'Hybrid-cloud IR agent — automated firewall deployment &amp; host isolation',
       tags:['FastAPI','Cloud SOAR','Automation'],
       live: 'https://sentinelwall.onrender.com',
@@ -476,11 +471,27 @@
       tags:['Python','Flask','Entropy'],
       live: 'https://secrets-scanner-production-00bd.up.railway.app/',
       detail:'Detects hardcoded API keys, tokens, and high-entropy strings in source code. Paste a snippet or upload a file and it flags likely secrets using Shannon-entropy analysis and pattern matching. Runs as a live demo on Railway.' },
-    { slug:'malscan', title:'malscan',
-      desc:'On-demand malware scanner — hash, entropy, PE &amp; YARA detection with a quarantine vault',
-      tags:['Python','YARA','Flask'],
-      live: 'https://malscan-production.up.railway.app/',
-      detail:'An on-demand malware scanner that combines a hash blocklist, Shannon-entropy and PE-import heuristics, and YARA rules into a single verdict per file. Adds a reversible quarantine vault, in-memory archive scanning (zip/tar/gzip, with zip-bomb defenses), optional VirusTotal hash lookups, and AI-powered triage that explains findings in plain English. 58 automated tests; live demo on Railway.' },
+    { slug:'phishing-sim', title:'Phishing Simulation Tool',
+      desc:'Per-recipient tracking, funnel analytics &amp; awareness reports — credentials never stored',
+      tags:['Python','Flask','SQLite'],
+      live: 'https://web-production-20af0.up.railway.app/',
+      detail:'An authorized phishing-simulation platform with per-recipient tracking, click-and-submit funnel analytics, and security-awareness reporting. Credentials are never stored — submitted form data is discarded immediately and only the event is recorded. Runs as a live demo on Railway.' },
+    { slug:'IntelFlow', title:'IntelFlow',
+      desc:'Async CTI &amp; SIEM enrichment engine — real-time IOC correlation across threat feeds',
+      tags:['FastAPI','asyncio','Pydantic'],
+      detail:'An asynchronous cyber-threat-intelligence enrichment engine that correlates indicators of compromise across multiple threat feeds in real time. Built on FastAPI and asyncio for high-throughput IOC lookups feeding into a SIEM.' },
+    { slug:'vuln-scanner', title:'Vulnerability Scanner',
+      desc:'Nmap XML parser cross-referencing EternalBlue, Heartbleed, vsftpd backdoor &amp; more',
+      tags:['Python','Nmap','CVE'],
+      detail:'Parses Nmap XML output and cross-references discovered services against known CVEs — EternalBlue, Heartbleed, the vsftpd backdoor, and others. Turns a raw network scan into a prioritized, human-readable list of likely exposures.' },
+    { slug:'pcap-threat-analyzer', title:'PCAP Threat Analyzer',
+      desc:'Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures',
+      tags:['Python','Scapy','SQLite'],
+      detail:'Parses raw .pcap captures to surface port scans, DNS tunneling, and command-and-control beaconing. Built on Scapy, with detections persisted to SQLite and a severity-ranked report. This was my first end-to-end detection-engineering project — going from packets on the wire to actionable findings.' },
+    { slug:'soc-log-dashboard', title:'SOC Log Analysis Dashboard',
+      desc:'Brute force, privilege escalation &amp; impossible travel in Windows event logs',
+      tags:['Python','SQLite','matplotlib'],
+      detail:'Correlates Windows event logs to detect brute-force attempts, privilege escalation, and impossible-travel logins. Aggregates the signals into a matplotlib dashboard so an analyst can triage at a glance instead of grepping raw logs.' },
   ];
   const SKIP = new Set(['kartik0219.github.io']);
 
@@ -553,9 +564,9 @@
     activeFilter = tag;
     document.querySelectorAll('.fb').forEach(b =>
       b.classList.toggle('active', b.dataset.tag === tag));
-    document.querySelectorAll('.pw').forEach(pw => {
-      const tags = pw.dataset.tags ? pw.dataset.tags.split(',') : [];
-      pw.style.display = (tag === 'All' || tags.includes(tag)) ? '' : 'none';
+    document.querySelectorAll('#proj-list .bento-card').forEach(card => {
+      const tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+      card.style.display = (tag === 'All' || tags.includes(tag)) ? '' : 'none';
     });
   }
 
@@ -575,38 +586,28 @@
     const statEl = document.querySelector('.c[data-to]');
     if (statEl) { statEl.dataset.to = projects.length; statEl.textContent = projects.length; }
 
-    list.innerHTML = projects.map((p, i) => `
-      <div class="pw" data-tags="${p.tags.join(',')}">
-        <div class="pc" style="transition-delay:${(i % 6) * 0.07}s">
-          <div class="pc-row">
-            <span class="pn">${String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <div class="pt">
-                ${p.title}
-                ${p.live ? '<span class="live-pill">Live</span>' : ''}
-                ${p.stars > 0 ? `<span class="star-badge">★ ${p.stars}</span>` : ''}
-              </div>
-              <div class="pd">${p.desc}</div>
-            </div>
-            <div class="pts">${p.tags.map(t => `<span class="ptg">${t}</span>`).join('')}</div>
-            <a class="pa" href="${p.live || p.url}" target="_blank" rel="noopener"
-               aria-label="Open ${p.title}">↗</a>
-          </div>
-          ${p.detail ? `
-          <button class="pdt-btn" aria-expanded="false" aria-controls="pdt-${i}">Details <span class="chev">▾</span></button>
-          <div class="pdt" id="pdt-${i}"><p class="pdt-inner">${p.detail}</p></div>` : ''}
+    list.innerHTML = projects.map((p, i) => {
+      const size = p.size === 'featured' ? ' featured' : p.size === 'wide' ? ' wide' : '';
+      const body = (p.size === 'featured' && p.detail) ? p.detail : p.desc;
+      return `
+      <a class="bento-card${size}${p.live ? ' live' : ''}" href="${p.live || p.url}"
+         target="_blank" rel="noopener" data-tags="${p.tags.join(',')}"
+         style="transition-delay:${(i % 8) * 0.05}s" aria-label="Open ${p.title}">
+        <div class="bc-top">
+          <span class="bc-num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="bc-arrow" aria-hidden="true">↗</span>
         </div>
-      </div>`).join('');
+        <div class="bc-title">
+          <span>${p.title}</span>
+          ${p.live ? '<span class="live-pill">Live</span>' : ''}
+          ${p.stars > 0 ? `<span class="star-badge">★ ${p.stars}</span>` : ''}
+        </div>
+        <div class="bc-desc">${body}</div>
+        <div class="bc-tags">${p.tags.map(t => `<span class="btag">${t}</span>`).join('')}</div>
+      </a>`;
+    }).join('');
 
-    attachCards([...list.querySelectorAll('.pc')]);
-    list.querySelectorAll('.pdt-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const panel = document.getElementById(btn.getAttribute('aria-controls'));
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        panel.classList.toggle('open', !open);
-      });
-    });
+    attachCards([...list.querySelectorAll('.bento-card')]);
     buildFilterBar(projects);
   }
 
@@ -631,7 +632,7 @@
         const api = bySlug[pin.slug.toLowerCase()];
         projects.push({
           title: pin.title, desc: pin.desc, detail: pin.detail || null, tags: pin.tags,
-          live: pin.live || null,
+          live: pin.live || null, size: pin.size || null,
           stars: api ? api.stargazers_count : 0,
           url: api ? api.html_url : `https://github.com/Kartik0219/${pin.slug}`,
         });
@@ -653,12 +654,26 @@
     } catch {
       projects = PINNED.map(p => ({
         title:p.title, desc:p.desc, detail:p.detail||null, tags:p.tags,
-        live:p.live||null, stars:0,
+        live:p.live||null, size:p.size||null, stars:0,
         url:`https://github.com/Kartik0219/${p.slug}`,
       }));
     }
 
     renderProjects(projects);
+  }
+
+  // ── Magnetic hero buttons ──
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.btns .btn').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const mx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+        const my = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+        btn.style.transform = `translate(${mx * 8}px, ${my * 6 - 2}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
   }
 
   loadProjects();
