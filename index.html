@@ -163,16 +163,16 @@
   /* ── 3D card ── */
   .pw { perspective:900px; margin-bottom:8px; }
   .pc {
-    display:grid; grid-template-columns:62px 1fr auto 30px;
-    align-items:center; gap:2rem;
+    --pc-indent:calc(62px + 2rem);
     padding:1.6rem 1.5rem; border-radius:var(--radius);
-    text-decoration:none; color:inherit; cursor:pointer;
+    color:inherit;
     background:var(--card); border:1px solid var(--border);
     position:relative; overflow:hidden; transform-style:preserve-3d;
     box-shadow:var(--shadow-card);
     opacity:0; translate:0 36px;
     transition:opacity .75s var(--ease-out),translate .75s var(--ease-out),background var(--dur-mid),border-color var(--dur-mid),box-shadow var(--dur-mid);
   }
+  .pc-row { display:grid; grid-template-columns:62px 1fr auto 30px; align-items:center; gap:2rem; }
   .pc.on { opacity:1; translate:0 0; }
   .pc::before { content:""; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,.09),transparent); }
   .pc::after { content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; background:linear-gradient(110deg,transparent 30%,rgba(255,107,53,.06) 50%,transparent 70%); opacity:0; transition:opacity .3s; }
@@ -186,7 +186,21 @@
   .pts { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:flex-end; }
   .ptg { font-size:.61rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:.18rem .55rem; border-radius:3px; background:rgba(255,107,53,.1); color:var(--orange); border:1px solid rgba(255,107,53,.18); cursor:pointer; transition:background var(--dur-fast),color var(--dur-fast); }
   .ptg:hover { background:rgba(255,107,53,.2); }
-  .pa { font-size:1.1rem; color:var(--muted); transition:transform .25s,color .25s; }
+  .pa { font-size:1.1rem; color:var(--muted); text-decoration:none; transition:transform .25s,color .25s; }
+  .pa:hover { color:var(--orange); transform:translate(3px,-3px); }
+
+  /* ── Project details (expand-on-click) ── */
+  .pdt-btn { margin-top:1rem; margin-left:var(--pc-indent); background:none; border:none; color:var(--muted);
+    font:inherit; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em;
+    cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; padding:0; transition:color var(--dur-fast); }
+  .pdt-btn:hover { color:var(--orange); }
+  .pdt-btn .chev { font-size:.8rem; transition:transform var(--dur-fast); }
+  .pdt-btn[aria-expanded="true"] .chev { transform:rotate(180deg); }
+  .pdt { max-height:0; overflow:hidden; transition:max-height .42s var(--ease-out); }
+  .pdt.open { max-height:360px; }
+  .pdt-inner { margin:.7rem 0 .1rem; margin-left:var(--pc-indent); max-width:64ch;
+    padding-top:.9rem; border-top:1px solid var(--border);
+    font-size:.86rem; line-height:1.65; color:var(--muted); }
 
   /* ── About ── */
   #about { border-top:1px solid var(--border); background:var(--surface); padding:7rem 2.5rem; }
@@ -230,7 +244,8 @@
 
   @media(max-width:768px) {
     .ag,.sg { grid-template-columns:1fr; }
-    .pc { grid-template-columns:36px 1fr 24px; gap:1rem; padding:1.2rem 1rem; }
+    .pc { padding:1.2rem 1rem; --pc-indent:0; }
+    .pc-row { grid-template-columns:1fr 24px; gap:1rem; }
     .pts { display:none; }
     .pn { display:none; }
     h1 { font-size:clamp(2.5rem,10vw,3.5rem); }
@@ -318,19 +333,31 @@
     <div class="sr">
       <p class="se" style="margin-bottom:1.5rem">Background</p>
       <p class="ab">I build security tools that make threat detection, incident response,
-        and security awareness more accessible. My focus is on clean, well-tested Python
-        tooling across the full detection engineering stack — from raw packet analysis to
-        cloud-native automation.</p>
-      <p class="ab">All projects are open-source, fully tested, and built with real-world
-        deployability in mind.</p>
+        and security awareness more accessible. My work spans the full detection-engineering
+        stack — from raw packet analysis and Windows log correlation to malware analysis,
+        vulnerability research, and cloud-native response automation.</p>
+      <p class="ab">I care about tooling that's clean, well-tested, and genuinely deployable —
+        not proofs of concept. Every project here is open-source, covered by an automated
+        test suite, and several run as live demos you can try right in the browser.</p>
+      <p class="ab">Lately I've been pairing classic detection techniques with LLM-assisted
+        analysis — using models to explain and triage findings, while keeping the security
+        engineering underneath doing the real work.</p>
 
       <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2026</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <div class="tl-title">malscan &amp; AI-assisted analysis</div>
+            <div class="tl-desc">Built a full malware scanner — hash, YARA, entropy/PE heuristics, quarantine, and zip-bomb-safe archive scanning — with optional VirusTotal lookups and Claude-powered triage that explains its detections.</div>
+          </div>
+        </div>
         <div class="tl-item">
           <div class="tl-year">2024</div>
           <div class="tl-dot"></div>
           <div class="tl-body">
             <div class="tl-title">Secrets Scanner — live web app</div>
-            <div class="tl-desc">Built entropy-based secret detection with a public Flask frontend deployed on Render.</div>
+            <div class="tl-desc">Built entropy-based secret detection with a public Flask frontend deployed on Railway.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -365,11 +392,13 @@
       <div class="sk3">
         <div class="skills">
           <span class="sk">Python</span><span class="sk">Threat Detection</span>
+          <span class="sk">Malware Analysis</span><span class="sk">YARA</span>
           <span class="sk">PCAP Analysis</span><span class="sk">SIEM / Log Analysis</span>
-          <span class="sk">Vulnerability Research</span><span class="sk">Flask</span>
-          <span class="sk">FastAPI</span><span class="sk">SQLite</span>
-          <span class="sk">Nmap / Scapy</span><span class="sk">CVE Research</span>
-          <span class="sk">Security Automation</span><span class="sk">asyncio</span>
+          <span class="sk">Vulnerability Research</span><span class="sk">CVE Research</span>
+          <span class="sk">Nmap / Scapy</span><span class="sk">Flask</span>
+          <span class="sk">FastAPI</span><span class="sk">asyncio</span>
+          <span class="sk">SQLite</span><span class="sk">Security Automation</span>
+          <span class="sk">LLM Integration</span><span class="sk">Railway / Deploy</span>
         </div>
       </div>
     </div>
@@ -418,31 +447,39 @@
   const PINNED = [
     { slug:'pcap-threat-analyzer', title:'PCAP Threat Analyzer',
       desc:'Port scan detection, DNS tunneling &amp; C2 beaconing from raw packet captures',
-      tags:['Python','Scapy','SQLite'] },
+      tags:['Python','Scapy','SQLite'],
+      detail:'Parses raw .pcap captures to surface port scans, DNS tunneling, and command-and-control beaconing. Built on Scapy, with detections persisted to SQLite and a severity-ranked report. This was my first end-to-end detection-engineering project — going from packets on the wire to actionable findings.' },
     { slug:'soc-log-dashboard', title:'SOC Log Analysis Dashboard',
       desc:'Brute force, privilege escalation &amp; impossible travel in Windows event logs',
-      tags:['Python','SQLite','matplotlib'] },
+      tags:['Python','SQLite','matplotlib'],
+      detail:'Correlates Windows event logs to detect brute-force attempts, privilege escalation, and impossible-travel logins. Aggregates the signals into a matplotlib dashboard so an analyst can triage at a glance instead of grepping raw logs.' },
     { slug:'vuln-scanner', title:'Vulnerability Scanner',
       desc:'Nmap XML parser cross-referencing EternalBlue, Heartbleed, vsftpd backdoor &amp; more',
-      tags:['Python','Nmap','CVE'] },
+      tags:['Python','Nmap','CVE'],
+      detail:'Parses Nmap XML output and cross-references discovered services against known CVEs — EternalBlue, Heartbleed, the vsftpd backdoor, and others. Turns a raw network scan into a prioritized, human-readable list of likely exposures.' },
     { slug:'phishing-sim', title:'Phishing Simulation Tool',
       desc:'Per-recipient tracking, funnel analytics &amp; awareness reports — credentials never stored',
       tags:['Python','Flask','SQLite'],
-      live: 'https://web-production-20af0.up.railway.app/' },
+      live: 'https://web-production-20af0.up.railway.app/',
+      detail:'An authorized phishing-simulation platform with per-recipient tracking, click-and-submit funnel analytics, and security-awareness reporting. Credentials are never stored — submitted form data is discarded immediately and only the event is recorded. Runs as a live demo on Railway.' },
     { slug:'IntelFlow', title:'IntelFlow',
       desc:'Async CTI &amp; SIEM enrichment engine — real-time IOC correlation across threat feeds',
-      tags:['FastAPI','asyncio','Pydantic'] },
+      tags:['FastAPI','asyncio','Pydantic'],
+      detail:'An asynchronous cyber-threat-intelligence enrichment engine that correlates indicators of compromise across multiple threat feeds in real time. Built on FastAPI and asyncio for high-throughput IOC lookups feeding into a SIEM.' },
     { slug:'sentinelwall', title:'SentinelWall',
       desc:'Hybrid-cloud IR agent — automated firewall deployment &amp; host isolation',
-      tags:['FastAPI','Cloud SOAR','Automation'] },
+      tags:['FastAPI','Cloud SOAR','Automation'],
+      detail:'A hybrid-cloud incident-response agent that automates containment — deploying firewall rules and isolating compromised hosts through cloud SOAR APIs. Designed to shrink the window between detection and response.' },
     { slug:'secrets-scanner', title:'Secrets Scanner',
       desc:'Detect hardcoded API keys, tokens &amp; high-entropy strings — paste code or upload a file',
       tags:['Python','Flask','Entropy'],
-      live: 'https://secrets-scanner-production-00bd.up.railway.app/' },
+      live: 'https://secrets-scanner-production-00bd.up.railway.app/',
+      detail:'Detects hardcoded API keys, tokens, and high-entropy strings in source code. Paste a snippet or upload a file and it flags likely secrets using Shannon-entropy analysis and pattern matching. Runs as a live demo on Railway.' },
     { slug:'malscan', title:'malscan',
       desc:'On-demand malware scanner — hash, entropy, PE &amp; YARA detection with a quarantine vault',
       tags:['Python','YARA','Flask'],
-      live: 'https://malscan-production.up.railway.app/' },
+      live: 'https://malscan-production.up.railway.app/',
+      detail:'An on-demand malware scanner that combines a hash blocklist, Shannon-entropy and PE-import heuristics, and YARA rules into a single verdict per file. Adds a reversible quarantine vault, in-memory archive scanning (zip/tar/gzip, with zip-bomb defenses), optional VirusTotal hash lookups, and AI-powered triage that explains findings in plain English. 58 automated tests; live demo on Railway.' },
   ];
   const SKIP = new Set(['kartik0219.github.io']);
 
@@ -539,23 +576,36 @@
 
     list.innerHTML = projects.map((p, i) => `
       <div class="pw" data-tags="${p.tags.join(',')}">
-        <a class="pc" href="${p.live || p.url}" target="_blank" rel="noopener"
-           style="transition-delay:${(i % 6) * 0.07}s">
-          <span class="pn">${String(i + 1).padStart(2, '0')}</span>
-          <div>
-            <div class="pt">
-              ${p.title}
-              ${p.live ? '<span class="live-pill">Live</span>' : ''}
-              ${p.stars > 0 ? `<span class="star-badge">★ ${p.stars}</span>` : ''}
+        <div class="pc" style="transition-delay:${(i % 6) * 0.07}s">
+          <div class="pc-row">
+            <span class="pn">${String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <div class="pt">
+                ${p.title}
+                ${p.live ? '<span class="live-pill">Live</span>' : ''}
+                ${p.stars > 0 ? `<span class="star-badge">★ ${p.stars}</span>` : ''}
+              </div>
+              <div class="pd">${p.desc}</div>
             </div>
-            <div class="pd">${p.desc}</div>
+            <div class="pts">${p.tags.map(t => `<span class="ptg">${t}</span>`).join('')}</div>
+            <a class="pa" href="${p.live || p.url}" target="_blank" rel="noopener"
+               aria-label="Open ${p.title}">↗</a>
           </div>
-          <div class="pts">${p.tags.map(t => `<span class="ptg">${t}</span>`).join('')}</div>
-          <span class="pa">↗</span>
-        </a>
+          ${p.detail ? `
+          <button class="pdt-btn" aria-expanded="false" aria-controls="pdt-${i}">Details <span class="chev">▾</span></button>
+          <div class="pdt" id="pdt-${i}"><p class="pdt-inner">${p.detail}</p></div>` : ''}
+        </div>
       </div>`).join('');
 
     attachCards([...list.querySelectorAll('.pc')]);
+    list.querySelectorAll('.pdt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        panel.classList.toggle('open', !open);
+      });
+    });
     buildFilterBar(projects);
   }
 
@@ -579,7 +629,7 @@
       PINNED.forEach(pin => {
         const api = bySlug[pin.slug.toLowerCase()];
         projects.push({
-          title: pin.title, desc: pin.desc, tags: pin.tags,
+          title: pin.title, desc: pin.desc, detail: pin.detail || null, tags: pin.tags,
           live: pin.live || null,
           stars: api ? api.stargazers_count : 0,
           url: api ? api.html_url : `https://github.com/Kartik0219/${pin.slug}`,
@@ -601,7 +651,7 @@
         });
     } catch {
       projects = PINNED.map(p => ({
-        title:p.title, desc:p.desc, tags:p.tags,
+        title:p.title, desc:p.desc, detail:p.detail||null, tags:p.tags,
         live:p.live||null, stars:0,
         url:`https://github.com/Kartik0219/${p.slug}`,
       }));
