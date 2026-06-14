@@ -136,6 +136,20 @@
 
   /* ── Filter bar ── */
   .filter-bar { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:2rem; margin-top:1.5rem; }
+
+  /* ── malscan download callout ── */
+  .dl-callout { display:flex; align-items:center; gap:1rem; margin:1.5rem 0 0; padding:.85rem 1.1rem; border-radius:var(--radius);
+    background:linear-gradient(100deg,rgba(255,107,53,.12),rgba(255,107,53,.035)); border:1px solid rgba(255,107,53,.25);
+    color:var(--text); text-decoration:none; transition:border-color .25s,background .25s,transform .25s; }
+  .dl-callout:hover { border-color:var(--orange); transform:translateY(-2px);
+    background:linear-gradient(100deg,rgba(255,107,53,.18),rgba(255,107,53,.06)); }
+  .dl-ic { font-size:1.25rem; color:var(--orange); flex:none; line-height:1; }
+  .dl-tx { font-size:.9rem; color:var(--muted); flex:1; line-height:1.45; }
+  .dl-tx b { color:var(--text); font-weight:700; }
+  .dl-btn { flex:none; background:var(--orange); color:#1a1a1a; font-weight:800; font-size:.78rem;
+    padding:.45rem .95rem; border-radius:6px; white-space:nowrap; transition:background .25s; }
+  .dl-callout:hover .dl-btn { background:var(--orange-lt); }
+  @media (max-width:560px) { .dl-callout { flex-wrap:wrap; } .dl-tx { flex-basis:100%; order:3; } }
   .fb {
     font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
     padding:.3rem .8rem; border-radius:20px; cursor:pointer; border:1px solid var(--border);
@@ -326,6 +340,11 @@
     <p class="se">Work</p>
     <h2 class="stitle">All projects.<br>Zero compromises.</h2>
   </div>
+  <a class="dl-callout" href="https://github.com/Kartik0219/malscan/releases/latest" target="_blank" rel="noopener">
+    <span class="dl-ic" aria-hidden="true">⬇</span>
+    <span class="dl-tx"><b>malscan</b> is now a downloadable desktop app — get it for <b>Windows</b> &amp; <b>macOS</b>, no install required.</span>
+    <span class="dl-btn">Download ↗</span>
+  </a>
   <div class="filter-bar" id="filter-bar"></div>
   <div id="proj-list" class="bento-grid">
     <!-- skeleton tiles shown while the GitHub API loads -->
