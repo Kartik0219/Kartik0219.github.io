@@ -176,6 +176,9 @@
     padding:.45rem .95rem; border-radius:6px; white-space:nowrap; transition:background .25s; }
   .dl-callout:hover .dl-btn { background:var(--orange-lt); }
   @media (max-width:560px) { .dl-callout { flex-wrap:wrap; } .dl-tx { flex-basis:100%; order:3; } }
+  .writeup-link { display:inline-block; margin:.75rem 0 0; font-size:.82rem; font-weight:600;
+    color:var(--muted); text-decoration:none; transition:color .2s; }
+  .writeup-link:hover { color:var(--orange); }
   .fb {
     font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
     padding:.3rem .8rem; border-radius:20px; cursor:pointer; border:1px solid var(--border);
@@ -392,6 +395,7 @@
     <span class="dl-tx"><b>malscan</b> is now a downloadable desktop app — get it for <b>Windows</b> &amp; <b>macOS</b>, no install required.</span>
     <span class="dl-btn">Download ↗</span>
   </a>
+  <a class="writeup-link" href="https://github.com/Kartik0219/malscan/blob/master/docs/building-malscan.md" target="_blank" rel="noopener">📝 Read how I built malscan — the engineering writeup ↗</a>
   <div class="filter-bar" id="filter-bar"></div>
   <div id="proj-list" class="bento-grid">
     <!-- skeleton tiles shown while the GitHub API loads -->
